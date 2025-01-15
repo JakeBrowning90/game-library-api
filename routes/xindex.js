@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Require controller
-const indexController = require("../controllers/indexController");
+const indexController = require("../controllers/xindexController");
 
 // Routes
 // router.post/get/put/delete('/', indexController.function_name)

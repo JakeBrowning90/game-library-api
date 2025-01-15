@@ -7,4 +7,9 @@ const router = express.Router();
 // Routes
 // router.post/get/put/delete('/', xController.function_name)
 
+// CREATE Tag
+// READ Tag
+// UPDATE Tag
+// DELETE Tag
+
 module.exports = router;

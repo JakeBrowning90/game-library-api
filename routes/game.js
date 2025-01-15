@@ -7,4 +7,9 @@ const router = express.Router();
 // Routes
 // router.post/get/put/delete('/', xController.function_name)
 
+// CREATE Game
+// READ Game
+// UPDATE Game
+// DELETE Game
+
 module.exports = router;
