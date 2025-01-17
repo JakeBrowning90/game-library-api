@@ -11,9 +11,12 @@ const express = require("express");
 
 const app = express();
 
+// Parse form payloads and sets to req.body
+app.use(express.urlencoded({ extended: false }));
+
 // Routers
 // const indexRouter = require("./routes/index");
-const userRouter = require("./routes/user")
+const userRouter = require("./routes/user");
 const gameRouter = require("./routes/game");
 const tagRouter = require("./routes/tag");
 
