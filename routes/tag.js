@@ -10,13 +10,16 @@ const tagController = require("../controllers/tagController");
 // CREATE Tag
 router.post("/", tagController.create_tag);
 
-// READ Tag
-router.get("/", tagController.read_tag);
+// READ MANY Tags
+router.get("/", tagController.read_tag_many);
+
+// READ 1 Tag
+router.get("/:id", tagController.read_tag);
 
 // UPDATE Tag
-router.put("/", tagController.update_tag);
+router.put("/:id", tagController.update_tag);
 
 // DELETE Tag
-router.delete("/", tagController.delete_tag);
+router.delete("/:id", tagController.delete_tag);
 
 module.exports = router;

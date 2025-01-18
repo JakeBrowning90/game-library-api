@@ -84,7 +84,6 @@ exports.update_user = asyncHandler(async (req, res, next) => {
 });
 
 exports.delete_user = asyncHandler(async (req, res, next) => {
-  // To-do: Validation
   // To-do: Error messages
   // To-do: Encryption
   await prisma.user.delete({
