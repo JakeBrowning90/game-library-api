@@ -10,13 +10,16 @@ const userController = require("../controllers/userController");
 // CREATE User
 router.post('/', userController.create_user)
 
-// READ User
-router.get('/', userController.read_user)
+// READ MANY Users
+router.get('/', userController.read_user_many)
+
+// READ 1 User
+router.get('/:id', userController.read_user)
 
 // UPDATE User
-router.put('/', userController.update_user)
+router.put('/:id', userController.update_user)
 
 // DELETE User
-router.delete('/', userController.delete_user)
+router.delete('/:id', userController.delete_user)
 
 module.exports = router;
