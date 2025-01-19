@@ -10,13 +10,16 @@ const gameController = require("../controllers/gameController");
 // CREATE Game
 router.post("/", gameController.create_game);
 
-// READ Game
-router.get("/", gameController.read_game);
+// READ Many Games
+router.get("/", gameController.read_game_many);
+
+// READ 1 Game
+router.get("/:id", gameController.read_game);
 
 // UPDATE Game
-router.put("/", gameController.update_game);
+router.put("/:id", gameController.update_game);
 
 // DELETE Game
-router.delete("/", gameController.delete_game);
+router.delete("/:id", gameController.delete_game);
 
 module.exports = router;

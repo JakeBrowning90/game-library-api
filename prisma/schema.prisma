@@ -23,10 +23,20 @@ model User {
 
 model Game {
   id Int @id @default(autoincrement())
-
+  title String
+  desc String
+  timeMin Int
+  timeMax Int
+  playerCtMin Int
+  playerCtMax Int
+  ageRec Int
+  gameWeight String
+  inCirc Boolean
+  tags Tag[]
 }
 
 model Tag {
   id Int @id @default(autoincrement())
   tagName String @unique
+  games Game[]
 }
