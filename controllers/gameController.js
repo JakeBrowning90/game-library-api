@@ -19,13 +19,10 @@ exports.create_game = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
-      console.log(req.body);
-
-      // if (!req.body.timeMax) {
-      //   req.body.timeMax = null;
-      // }
-      console.log(req.body);
-
+      // Convert empty string to null (TEMP?)
+      if (!req.body.timeMax) {
+        req.body.timeMax = null;
+      }
       const newGame = await prisma.game.create({
         data: {
           title: req.body.title,
@@ -73,6 +70,10 @@ exports.update_game = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
+      // Convert empty string to null (TEMP?)
+      if (!req.body.timeMax) {
+        req.body.timeMax = null;
+      }
       await prisma.game.update({
         where: { id: parseInt(req.params.id) },
         data: {
