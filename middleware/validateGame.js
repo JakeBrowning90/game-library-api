@@ -22,7 +22,7 @@ const validateGame = [
     .isLength({ min: 1, max: 500 })
     .withMessage("Description must contain between 1 and 500 characters."),
   body("timeMin").toInt(),
-  body("timeMax").toInt().optional({ checkFalsy: true }),
+  body("timeMax").toInt().optional({ checkFalsy: true, nullable: true }),
   body("playerCtMin").toInt(),
   body("playerCtMax").toInt(),
   body("ageRec").toInt(),

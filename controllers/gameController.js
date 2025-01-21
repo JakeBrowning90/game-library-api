@@ -19,9 +19,11 @@ exports.create_game = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
-      if (!req.body.timeMax) {
-        req.body.timeMax = null;
-      }
+      console.log(req.body);
+
+      // if (!req.body.timeMax) {
+      //   req.body.timeMax = null;
+      // }
       console.log(req.body);
 
       const newGame = await prisma.game.create({
@@ -29,7 +31,7 @@ exports.create_game = [
           title: req.body.title,
           desc: req.body.desc,
           timeMin: req.body.timeMin,
-          timeMax: req.body.timeMax ?? prisma.skip,
+          timeMax: req.body.timeMax,
           playerCtMin: req.body.playerCtMin,
           playerCtMax: req.body.playerCtMax,
           ageRec: req.body.ageRec,
