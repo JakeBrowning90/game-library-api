@@ -5,6 +5,7 @@ const validateUser = require("../middleware/validateUser");
 
 // Import Prisma
 const { PrismaClient } = require("@prisma/client");
+const { validationResult } = require("express-validator");
 const prisma = new PrismaClient();
 // exports.function_name = asyncHandler(async(req, res, next) => {
 
@@ -13,29 +14,23 @@ const prisma = new PrismaClient();
 exports.create_user = [
   validateUser,
   asyncHandler(async (req, res, next) => {
-    // To-do: Validation
-    // To-do: Error messages
-    // To-do: Encryption
-    // Placeholder bool adapter utility
-    let isAdmin = false;
-    if (req.body.isAdmin) {
-      isAdmin = true;
-    }
-    let isDemo = false;
-    if (req.body.isDemo) {
-      isDemo = true;
-    }
-    //bool adapter utility END
-    await prisma.user.create({
-      data: {
-        username: req.body.username,
-        password: req.body.password,
-        isAdmin: isAdmin,
-        isDemo: isDemo,
-      },
-    });
+    // Send Error messages if validation fails
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json(errors);
+    } else {
+      // To-do: Password Encryption
+      await prisma.user.create({
+        data: {
+          username: req.body.username,
+          password: req.body.password,
+          isAdmin: req.body.isAdmin,
+          isDemo: req.body.isDemo,
+        },
+      });
 
-    res.json("Created user " + req.body.username);
+      res.json("Created user " + req.body.username);
+    }
   }),
 ];
 
@@ -57,35 +52,31 @@ exports.read_user = asyncHandler(async (req, res, next) => {
   res.json(user);
 });
 
-exports.update_user = asyncHandler(async (req, res, next) => {
-  // To-do: Validation
-  // To-do: Error messages
-  // To-do: Encryption
-  // Placeholder bool adapter utility
-  let isAdmin = false;
-  if (req.body.isAdmin) {
-    isAdmin = true;
-  }
-  let isDemo = false;
-  if (req.body.isDemo) {
-    isDemo = true;
-  }
-  //bool adapter utility END
-  const user = await prisma.user.update({
-    where: { id: parseInt(req.params.id) },
-    data: {
-      username: req.body.username,
-      password: req.body.password,
-      isAdmin: isAdmin,
-      isDemo: isDemo,
-    },
-  });
-  res.json(user);
-});
+exports.update_user = [
+  validateUser,
+  asyncHandler(async (req, res, next) => {
+    // Send Error messages if validation fails
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json(errors);
+    } else {
+      // To-do: Password Encryption
+      const user = await prisma.user.update({
+        where: { id: parseInt(req.params.id) },
+        data: {
+          username: req.body.username,
+          password: req.body.password,
+          isAdmin: req.body.isAdmin,
+          isDemo: req.body.isDemo,
+        },
+      });
+      res.json(user);
+    }
+  }),
+];
 
 exports.delete_user = asyncHandler(async (req, res, next) => {
   // To-do: Error messages
-  // To-do: Encryption
   await prisma.user.delete({
     where: {
       id: parseInt(req.params.id),

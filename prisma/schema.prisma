@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["strictUndefinedChecks"]
 }
 
 datasource db {
@@ -23,10 +24,10 @@ model User {
 
 model Game {
   id Int @id @default(autoincrement())
-  title String
-  desc String
+  title String @unique
+  desc String?
   timeMin Int
-  timeMax Int
+  timeMax Int?
   playerCtMin Int
   playerCtMax Int
   ageRec Int

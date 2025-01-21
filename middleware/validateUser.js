@@ -27,6 +27,10 @@ const validateUser = [
   //     return value === req.body.password;
   //   })
   //   .withMessage("Typed passwords do not match."),
+  body("isAdmin")
+  .toBoolean(),
+  body("isDemo")
+  .toBoolean(),
 ];
 
 module.exports = validateUser;
