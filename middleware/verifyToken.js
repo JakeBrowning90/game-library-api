@@ -9,7 +9,7 @@ verifyToken = (req, res, next) => {
 
     next();
   } else {
-    res.sendStatus(403);
+    res.sendStatus(401);
   }
 };
 
