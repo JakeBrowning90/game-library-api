@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 // Require controller
 const userController = require("../controllers/userController");
@@ -8,18 +9,27 @@ const userController = require("../controllers/userController");
 // router.post/get/put/delete('/', userController.function_name)
 
 // CREATE User
-router.post('/', userController.create_user)
+router.post("/", userController.create_user);
 
 // READ MANY Users
-router.get('/', userController.read_user_many)
+router.get("/", userController.read_user_many);
 
 // READ 1 User
-router.get('/:id', userController.read_user)
+router.get("/:id", userController.read_user);
 
 // UPDATE User
-router.put('/:id', userController.update_user)
+router.put("/:id", userController.update_user);
 
 // DELETE User
-router.delete('/:id', userController.delete_user)
+router.delete("/:id", userController.delete_user);
+
+// Login
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    session: false,
+  }),
+  userController.user_login
+);
 
 module.exports = router;

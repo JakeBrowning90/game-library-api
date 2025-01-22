@@ -21,16 +21,14 @@ const validateUser = [
     .trim()
     .isLength({ min: 1, max: 20 })
     .withMessage("Password must contain between 1 and 20 characters."),
-  // body("confirmPassword")
-  //   .trim()
-  //   .custom((value, { req }) => {
-  //     return value === req.body.password;
-  //   })
-  //   .withMessage("Typed passwords do not match."),
-  body("isAdmin")
-  .toBoolean(),
-  body("isDemo")
-  .toBoolean(),
+  body("confirmPassword")
+    .trim()
+    .custom((value, { req }) => {
+      return value === req.body.password;
+    })
+    .withMessage("Typed passwords do not match."),
+  body("isAdmin").toBoolean(),
+  body("isDemo").toBoolean(),
 ];
 
 module.exports = validateUser;

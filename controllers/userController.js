@@ -1,8 +1,7 @@
 const asyncHandler = require("express-async-handler");
-
-// To-do: validate create user
 const validateUser = require("../middleware/validateUser");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // Import Prisma
 const { PrismaClient } = require("@prisma/client");
 const { validationResult } = require("express-validator");
@@ -19,11 +18,13 @@ exports.create_user = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
-      // To-do: Password Encryption
+      // Password Encryption
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
       await prisma.user.create({
         data: {
           username: req.body.username,
-          password: req.body.password,
+          password: hashedPassword,
           isAdmin: req.body.isAdmin,
           isDemo: req.body.isDemo,
         },
@@ -84,3 +85,21 @@ exports.delete_user = asyncHandler(async (req, res, next) => {
   });
   res.json("Deleted user");
 });
+
+exports.user_login = asyncHandler(async (req, res, next) => {
+  jwt.sign(
+    { user: req.user },
+    process.env.SECRET_KEY,
+    { expiresIn: "30m" },
+    (err, token) => {
+      res.json({
+        username: req.user.username,
+        id: req.user._id,
+        isAdmin: req.user.isAdmin,
+        isDemo: req.user.isDemo,
+        // Add "Bearer" on frontend
+        token: token,
+      });
+    }
+  );
+})
