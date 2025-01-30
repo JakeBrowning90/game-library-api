@@ -19,6 +19,7 @@ const app = express();
 app.use(passport.initialize());
 
 // Parse form payloads and sets to req.body
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());

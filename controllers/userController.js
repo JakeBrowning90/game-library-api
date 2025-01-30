@@ -25,6 +25,7 @@ exports.create_user = [
         data: {
           username: req.body.username,
           password: hashedPassword,
+          isConfirmed: req.body.isConfirmed,
           isAdmin: req.body.isAdmin,
           isDemo: req.body.isDemo,
         },
@@ -67,6 +68,7 @@ exports.update_user = [
         data: {
           username: req.body.username,
           password: req.body.password,
+          isConfirmed: req.body.isConfirmed,
           isAdmin: req.body.isAdmin,
           isDemo: req.body.isDemo,
         },
@@ -95,6 +97,7 @@ exports.user_login = asyncHandler(async (req, res, next) => {
       res.json({
         username: req.user.username,
         id: req.user._id,
+        isConfirmed: req.body.isConfirmed,
         isAdmin: req.user.isAdmin,
         isDemo: req.user.isDemo,
         // Add "Bearer" on frontend
@@ -102,4 +105,4 @@ exports.user_login = asyncHandler(async (req, res, next) => {
       });
     }
   );
-})
+});
