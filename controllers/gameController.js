@@ -51,7 +51,13 @@ exports.create_game = [
 ];
 
 exports.read_game_many = asyncHandler(async (req, res, next) => {
-  const allGames = await prisma.game.findMany({});
+  const allGames = await prisma.game.findMany({
+    orderBy: [
+      {
+        title: "asc",
+      },
+    ],
+  });
   res.json(allGames);
 });
 

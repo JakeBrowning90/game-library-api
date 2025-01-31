@@ -30,7 +30,13 @@ exports.create_tag = [
 ];
 
 exports.read_tag_many = asyncHandler(async (req, res, next) => {
-  const allTags = await prisma.tag.findMany({});
+  const allTags = await prisma.tag.findMany({
+    orderBy: [
+      {
+        tagName: "asc",
+      },
+    ],
+  });
   res.json(allTags);
 });
 

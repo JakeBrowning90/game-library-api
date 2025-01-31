@@ -40,7 +40,13 @@ exports.read_user_many = asyncHandler(async (req, res, next) => {
   // To-do: Validation
   // To-do: Error messages
   // To-do: Encryption
-  const allUsers = await prisma.user.findMany({});
+  const allUsers = await prisma.user.findMany({
+    orderBy: [
+      {
+        username: "asc",
+      },
+    ],
+  });
   res.json(allUsers);
 });
 
