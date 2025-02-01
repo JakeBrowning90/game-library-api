@@ -98,7 +98,7 @@ exports.user_login = asyncHandler(async (req, res, next) => {
   jwt.sign(
     { user: req.user },
     process.env.SECRET_KEY,
-    { expiresIn: "30m" },
+    { expiresIn: "5m" },
     (err, token) => {
       res.json({
         username: req.user.username,
