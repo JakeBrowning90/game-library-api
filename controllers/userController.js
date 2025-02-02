@@ -98,7 +98,7 @@ exports.user_login = asyncHandler(async (req, res, next) => {
   jwt.sign(
     { user: req.user },
     process.env.SECRET_KEY,
-    { expiresIn: "5m" },
+    { expiresIn: "15m" },
     (err, token) => {
       res.json({
         username: req.user.username,
@@ -111,4 +111,8 @@ exports.user_login = asyncHandler(async (req, res, next) => {
       });
     }
   );
+});
+
+exports.token_check = asyncHandler(async (req, res, next) => {
+  res.json("Protected route")
 });

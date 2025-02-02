@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const verifyToken = require("../middleware/verifyToken");
 
 // Require controller
 const userController = require("../controllers/userController");
@@ -31,5 +32,9 @@ router.post(
   }),
   userController.user_login
 );
+
+// TEST Route - Authentication check
+router.post("/check", verifyToken, userController.token_check);
+
 
 module.exports = router;
