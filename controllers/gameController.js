@@ -63,6 +63,17 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
 
 exports.read_game = asyncHandler(async (req, res, next) => {
   const game = await prisma.game.findUnique({
+    include: {
+      tags: {
+        orderBy: {
+          tagName: "asc"
+        },
+        select: {
+          tagName: true,
+          id: true
+        }
+      }
+    },
     where: { id: parseInt(req.params.id) },
   });
   res.json(game);
