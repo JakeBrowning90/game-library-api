@@ -1,18 +1,20 @@
 const asyncHandler = require("express-async-handler");
 
 // To-do: validate create game
-const validateGame = require("../middleware/validateGame");
+const validateGame = require("../middleware/validateGameCreate");
 
 // Import Prisma
 const { PrismaClient } = require("@prisma/client");
 const { validationResult } = require("express-validator");
+const validateGameUpdate = require("../middleware/validateGameUpdate");
+const validateGameCreate = require("../middleware/validateGameCreate");
 const prisma = new PrismaClient();
 // exports.function_name = asyncHandler(async(req, res, next) => {
 
 // })
 
 exports.create_game = [
-  validateGame,
+  validateGameCreate,
   asyncHandler(async (req, res, next) => {
     // Send Error messages if validation fails
     const errors = validationResult(req);
@@ -80,7 +82,7 @@ exports.read_game = asyncHandler(async (req, res, next) => {
 });
 
 exports.update_game = [
-  validateGame,
+  validateGameUpdate,
   asyncHandler(async (req, res, next) => {
     // Send Error messages if validation fails
     const errors = validationResult(req);
