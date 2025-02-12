@@ -53,12 +53,19 @@ exports.create_game = [
 ];
 
 exports.read_game_many = asyncHandler(async (req, res, next) => {
+  const query = req.query.title || "";
   const allGames = await prisma.game.findMany({
     orderBy: [
       {
         title: "asc",
       },
     ],
+    where: {
+      title: {
+        contains: query,
+        mode: "insensitive",
+      },
+    },
   });
   res.json(allGames);
 });
@@ -68,13 +75,13 @@ exports.read_game = asyncHandler(async (req, res, next) => {
     include: {
       tags: {
         orderBy: {
-          tagName: "asc"
+          tagName: "asc",
         },
         select: {
           tagName: true,
-          id: true
-        }
-      }
+          id: true,
+        },
+      },
     },
     where: { id: parseInt(req.params.id) },
   });
