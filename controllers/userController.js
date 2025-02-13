@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const validateUser = require("../middleware/validateUser");
+const validateUserUpdate = require("../middleware/validateUserUpdate");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // Import Prisma
@@ -61,7 +62,7 @@ exports.read_user = asyncHandler(async (req, res, next) => {
 });
 
 exports.update_user = [
-  validateUser,
+  validateUserUpdate,
   asyncHandler(async (req, res, next) => {
     // Send Error messages if validation fails
     const errors = validationResult(req);
@@ -72,8 +73,8 @@ exports.update_user = [
       const user = await prisma.user.update({
         where: { id: parseInt(req.params.id) },
         data: {
-          username: req.body.username,
-          password: req.body.password,
+          // username: req.body.username,
+          // password: req.body.password,
           isConfirmed: req.body.isConfirmed,
           isAdmin: req.body.isAdmin,
           isDemo: req.body.isDemo,
@@ -102,10 +103,11 @@ exports.user_login = asyncHandler(async (req, res, next) => {
     (err, token) => {
       res.json({
         username: req.user.username,
-        id: req.user._id,
+        id: req.user.id,
         isConfirmed: req.body.isConfirmed,
         isAdmin: req.user.isAdmin,
         isDemo: req.user.isDemo,
+        isConfirmed: req.user.isConfirmed,
         // Add "Bearer" on frontend
         token: token,
       });
@@ -114,5 +116,5 @@ exports.user_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.token_check = asyncHandler(async (req, res, next) => {
-  res.json("Protected route")
+  res.json("Protected route");
 });

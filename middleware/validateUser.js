@@ -29,6 +29,7 @@ const validateUser = [
     .withMessage("Typed passwords do not match."),
   body("isAdmin").toBoolean(),
   body("isDemo").toBoolean(),
+  body("isConfirmed").toBoolean(),
 ];
 
 module.exports = validateUser;
