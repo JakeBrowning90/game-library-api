@@ -114,6 +114,6 @@ exports.user_login = asyncHandler(async (req, res, next) => {
   );
 });
 
-// exports.token_check = asyncHandler(async (req, res, next) => {
-//   res.json("Protected route");
-// });
+exports.token_check = asyncHandler(async (req, res, next) => {
+  res.status(200);
+});

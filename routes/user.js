@@ -34,6 +34,6 @@ router.post(
 );
 
 // TEST Route - Authentication check
-// router.post("/check", verifyToken, userController.token_check);
+router.post("/check", verifyToken, userController.token_check);
 
 module.exports = router;
