@@ -69,7 +69,6 @@ exports.update_user = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
-      // To-do: Password Encryption
       const user = await prisma.user.update({
         where: { id: parseInt(req.params.id) },
         data: {
@@ -115,6 +114,6 @@ exports.user_login = asyncHandler(async (req, res, next) => {
   );
 });
 
-exports.token_check = asyncHandler(async (req, res, next) => {
-  res.json("Protected route");
-});
+// exports.token_check = asyncHandler(async (req, res, next) => {
+//   res.json("Protected route");
+// });

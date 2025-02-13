@@ -19,10 +19,10 @@ router.get("/", userController.read_user_many);
 router.get("/:id", userController.read_user);
 
 // UPDATE User
-router.put("/:id", userController.update_user);
+router.put("/:id", verifyToken, userController.update_user);
 
 // DELETE User
-router.delete("/:id", userController.delete_user);
+router.delete("/:id", verifyToken, userController.delete_user);
 
 // Login
 router.post(
@@ -34,7 +34,6 @@ router.post(
 );
 
 // TEST Route - Authentication check
-router.post("/check", verifyToken, userController.token_check);
-
+// router.post("/check", verifyToken, userController.token_check);
 
 module.exports = router;

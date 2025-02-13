@@ -9,10 +9,8 @@ verifyToken = (req, res, next) => {
     const bearerToken = bearer[1];
     req.token = bearerToken;
 
-    // jwt.verify(req.token, process.env.SECRET_KEY);
     try {
       jwt.verify(req.token, process.env.SECRET_KEY);
-      // console.log(verify)
     } catch (err) {
       res.sendStatus(401);
     }

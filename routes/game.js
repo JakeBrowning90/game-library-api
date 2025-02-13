@@ -17,9 +17,9 @@ router.get("/", gameController.read_game_many);
 router.get("/:id", gameController.read_game);
 
 // UPDATE Game
-router.put("/:id", gameController.update_game);
+router.put("/:id", verifyToken, gameController.update_game);
 
 // DELETE Game
-router.delete("/:id", gameController.delete_game);
+router.delete("/:id", verifyToken, gameController.delete_game);
 
 module.exports = router;
