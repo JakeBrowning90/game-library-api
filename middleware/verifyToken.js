@@ -1,6 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 verifyToken = (req, res, next) => {
+  //Test confirmation check
+  const confirmStatus = req.headers["confirmation"];
+  if (confirmStatus == "false") {
+    res.sendStatus(401).json("Unauthorized");
+  }
   // get auth header value
   const bearerHeader = req.headers["authorization"];
   // Separate token from 'Bearer ' header
