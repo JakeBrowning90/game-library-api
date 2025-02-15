@@ -1,7 +1,6 @@
 require("dotenv").config();
-const cors = require("cors");
-
 const express = require("express");
+const cors = require("cors");
 //multer
 //cloudinary
 //streamifier
@@ -10,10 +9,11 @@ const express = require("express");
 //passport
 require("./middleware/passport");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+// const LocalStrategy = require("passport-local").Strategy;
 //jwt
 
 const app = express();
+app.use(cors());
 
 // Passport to routes
 app.use(passport.initialize());
@@ -21,8 +21,6 @@ app.use(passport.initialize());
 // Parse form payloads and sets to req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.use(cors());
 
 // Routers
 // const indexRouter = require("./routes/index");
