@@ -30,7 +30,7 @@ model Game {
   timeMin Int
   timeMax Int?
   playerCtMin Int
-  playerCtMax Int
+  playerCtMax Int?
   ageRec Int
   gameWeight String
   inCirc Boolean

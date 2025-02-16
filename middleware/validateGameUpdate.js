@@ -14,7 +14,7 @@ const validateGameUpdate = [
   body("timeMin").toInt(),
   body("timeMax").toInt().optional({ checkFalsy: true, nullable: true }),
   body("playerCtMin").toInt(),
-  body("playerCtMax").toInt(),
+  body("playerCtMax").toInt().optional({ checkFalsy: true, nullable: true }),
   body("ageRec").toInt(),
   body("gameWeight").trim(),
   body("inCirc").toBoolean(),
