@@ -38,23 +38,24 @@ exports.create_user = [
 ];
 
 exports.read_user_many = asyncHandler(async (req, res, next) => {
-  // To-do: Validation
-  // To-do: Error messages
-  // To-do: Encryption
+  const query = req.query.username || "";
   const allUsers = await prisma.user.findMany({
     orderBy: [
       {
         username: "asc",
       },
     ],
+    where: {
+      username: {
+        contains: query,
+        mode: "insensitive",
+      },
+    },
   });
   res.json(allUsers);
 });
 
 exports.read_user = asyncHandler(async (req, res, next) => {
-  // To-do: Validation
-  // To-do: Error messages
-  // To-do: Encryption
   const user = await prisma.user.findUnique({
     where: { id: parseInt(req.params.id) },
   });
