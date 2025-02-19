@@ -16,17 +16,21 @@ const validateGameUpdate = [
     .isInt({ gt: 0, lt: 19 })
     .withMessage("Enter a minimum age recommendation (1 - 18)."),
   body("playerCtMin")
+    .toInt()
     .isInt({ gt: 0, lt: 10 })
     .withMessage("Enter a minimum player count."),
   body("playerCtMax")
-    .isInt({ gt: -1, lt: 10 })
-    .optional({ checkFalsy: true, nullable: true }),
+    .optional({ checkFalsy: true, nullable: true })
+    .toInt()
+    .isInt({ gt: -1, lt: 10 }),
   body("timeMin")
+    .toInt()
     .isInt({ gt: 0, lt: 301 })
     .withMessage("Enter a minimum playtime in minutes (1 - 300)."),
   body("timeMax")
-    .isInt({ gt: -1, lt: 300 })
-    .optional({ checkFalsy: true, nullable: true }),
+    .optional({ checkFalsy: true, nullable: true })
+    .toInt()
+    .isInt({ gt: -1, lt: 300 }),
   body("gameWeight")
     .trim()
     .notEmpty()

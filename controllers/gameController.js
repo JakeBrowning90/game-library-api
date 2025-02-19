@@ -25,6 +25,9 @@ exports.create_game = [
       if (!req.body.timeMax) {
         req.body.timeMax = null;
       }
+      if (!req.body.playerCtMax) {
+        req.body.playerCtMax = null;
+      }
       const newGame = await prisma.game.create({
         data: {
           title: req.body.title,
@@ -99,6 +102,9 @@ exports.update_game = [
       // Convert empty string to null (TEMP?)
       if (!req.body.timeMax) {
         req.body.timeMax = null;
+      }
+      if (!req.body.playerCtMax) {
+        req.body.playerCtMax = null;
       }
       await prisma.game.update({
         where: { id: parseInt(req.params.id) },
