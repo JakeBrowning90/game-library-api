@@ -73,6 +73,26 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
   res.json(allGames);
 });
 
+// Return only games in circulation
+exports.read_game_circ = asyncHandler(async (req, res, next) => {
+  const query = req.query.title || "";
+  const allGames = await prisma.game.findMany({
+    orderBy: [
+      {
+        title: "asc",
+      },
+    ],
+    where: {
+      title: {
+        contains: query,
+        mode: "insensitive",
+      },
+      inCirc: true,
+    },
+  });
+  res.json(allGames);
+});
+
 exports.read_game = asyncHandler(async (req, res, next) => {
   const game = await prisma.game.findUnique({
     include: {

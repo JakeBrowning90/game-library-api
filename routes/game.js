@@ -10,8 +10,11 @@ const gameController = require("../controllers/gameController");
 // CREATE Game
 router.post("/", verifyToken, gameController.create_game);
 
-// READ Many Games
+// READ All Games
 router.get("/", gameController.read_game_many);
+
+// READ Games in Circulation
+router.get("/circ", gameController.read_game_circ);
 
 // READ 1 Game
 router.get("/:id", gameController.read_game);
