@@ -1,13 +1,14 @@
 # Game Library API
 
 ## Overview
-TBA
+Public Frontend Repo: https://github.com/JakeBrowning90/game-library-public
+Private Frontend Repo: https://github.com/JakeBrowning90/game-library-private
 
 ## Technologies
-TBA
+Node.js, Express, Prisma ORM, Passport.js, jsonwebtoken
 
 ## Challenges/To-dos
-TBA
+Validation bugfixes: Still occasional rejection of seemingly valid game Objects?
 
 ## How to use
 TBA
