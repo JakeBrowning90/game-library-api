@@ -57,6 +57,8 @@ exports.create_game = [
 
 exports.read_game_many = asyncHandler(async (req, res, next) => {
   const query = req.query.title || "";
+  const qWeight = req.query.weight || "";
+
   const allGames = await prisma.game.findMany({
     orderBy: [
       {
@@ -68,6 +70,9 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
         contains: query,
         mode: "insensitive",
       },
+      gameWeight : {
+        contains: qWeight,
+      }
     },
   });
   res.json(allGames);
