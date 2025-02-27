@@ -58,24 +58,58 @@ exports.create_game = [
 exports.read_game_many = asyncHandler(async (req, res, next) => {
   const query = req.query.title || "";
   const qWeight = req.query.weight || "";
+  const qCount = parseInt(req.query.count) || undefined;
 
-  const allGames = await prisma.game.findMany({
-    orderBy: [
-      {
-        title: "asc",
+  if (!qCount) {
+    const allGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: query,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
       },
-    ],
-    where: {
-      title: {
-        contains: query,
-        mode: "insensitive",
+    });
+    res.json(allGames);
+  } else {
+    const allGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: query,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
+        OR: [
+          {
+            playerCtMin: qCount,
+          },
+          {
+            playerCtMin: {
+              lte: qCount,
+            },
+            playerCtMax: {
+              gte: qCount,
+            },
+          },
+        ],
       },
-      gameWeight : {
-        contains: qWeight,
-      }
-    },
-  });
-  res.json(allGames);
+    });
+    res.json(allGames);
+  }
 });
 
 // Return only games in circulation
