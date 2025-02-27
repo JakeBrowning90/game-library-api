@@ -56,7 +56,7 @@ exports.create_game = [
 ];
 
 exports.read_game_many = asyncHandler(async (req, res, next) => {
-  const query = req.query.title || "";
+  const qTitle = req.query.title || "";
   const qWeight = req.query.weight || "";
   const qCount = parseInt(req.query.count) || undefined;
 
@@ -69,7 +69,7 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
       ],
       where: {
         title: {
-          contains: query,
+          contains: qTitle,
           mode: "insensitive",
         },
         gameWeight: {
@@ -87,7 +87,7 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
       ],
       where: {
         title: {
-          contains: query,
+          contains: qTitle,
           mode: "insensitive",
         },
         gameWeight: {
@@ -114,22 +114,62 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
 
 // Return only games in circulation
 exports.read_game_circ = asyncHandler(async (req, res, next) => {
-  const query = req.query.title || "";
-  const allGames = await prisma.game.findMany({
-    orderBy: [
-      {
-        title: "asc",
+  const qTitle = req.query.title || "";
+  const qWeight = req.query.weight || "";
+  const qCount = parseInt(req.query.count) || undefined;
+
+  if (!qCount) {
+    const foundGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: qTitle,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
+        inCirc: true,
       },
-    ],
-    where: {
-      title: {
-        contains: query,
-        mode: "insensitive",
+    });
+    res.json(foundGames);
+  } else {
+    const foundGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: qTitle,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
+        OR: [
+          {
+            playerCtMin: qCount,
+          },
+          {
+            playerCtMin: {
+              lte: qCount,
+            },
+            playerCtMax: {
+              gte: qCount,
+            },
+          },
+        ],
+        inCirc: true,
       },
-      inCirc: true,
-    },
-  });
-  res.json(allGames);
+    });
+    res.json(foundGames);
+  }
 });
 
 exports.read_game = asyncHandler(async (req, res, next) => {
