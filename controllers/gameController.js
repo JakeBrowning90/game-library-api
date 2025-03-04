@@ -59,9 +59,15 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
   const qTitle = req.query.title || "";
   const qWeight = req.query.weight || "";
   const qCount = parseInt(req.query.count) || undefined;
+  let qTags;
+  if (!req.query.tags || req.query.tags[0] == "") {
+    qTags = undefined;
+  } else {
+    qTags = req.query.tags;
+  }
 
-  if (!qCount) {
-    const allGames = await prisma.game.findMany({
+  if (qCount && qTags) {
+    const foundGames = await prisma.game.findMany({
       orderBy: [
         {
           title: "asc",
@@ -75,11 +81,27 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
         gameWeight: {
           contains: qWeight,
         },
+        OR: [
+          {
+            playerCtMin: qCount,
+          },
+          {
+            playerCtMin: {
+              lte: qCount,
+            },
+            playerCtMax: {
+              gte: qCount,
+            },
+          },
+        ],
+        tags: {
+          some: { id: parseInt(qTags) },
+        },
       },
     });
-    res.json(allGames);
-  } else {
-    const allGames = await prisma.game.findMany({
+    res.json(foundGames);
+  } else if (qCount && !qTags) {
+    const foundGames = await prisma.game.findMany({
       orderBy: [
         {
           title: "asc",
@@ -108,7 +130,46 @@ exports.read_game_many = asyncHandler(async (req, res, next) => {
         ],
       },
     });
-    res.json(allGames);
+    res.json(foundGames);
+  } else if (!qCount && qTags) {
+    const foundGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: qTitle,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
+        tags: {
+          some: { id: parseInt(qTags) },
+        },
+      },
+    });
+    res.json(foundGames);
+  } else {
+    const foundGames = await prisma.game.findMany({
+      orderBy: [
+        {
+          title: "asc",
+        },
+      ],
+      where: {
+        title: {
+          contains: qTitle,
+          mode: "insensitive",
+        },
+        gameWeight: {
+          contains: qWeight,
+        },
+      },
+    });
+    res.json(foundGames);
   }
 });
 
@@ -123,8 +184,6 @@ exports.read_game_circ = asyncHandler(async (req, res, next) => {
   } else {
     qTags = req.query.tags;
   }
-
-  // console.log(req.query);
 
   if (qCount && qTags) {
     const foundGames = await prisma.game.findMany({
