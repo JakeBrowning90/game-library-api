@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 verifyToken = (req, res, next) => {
-  //Test confirmation check
+  //Confirmation status check
   const confirmStatus = req.headers["confirmation"];
   if (confirmStatus == "false") {
     res.sendStatus(401).json("Unauthorized");

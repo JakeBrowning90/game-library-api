@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../middleware/verifyToken");
+const screenDemoUser = require("../middleware/screenDemoUser");
+
 // Require controller
 const gameController = require("../controllers/gameController");
 
@@ -8,7 +10,7 @@ const gameController = require("../controllers/gameController");
 // router.post/get/put/delete('/', gameController.function_name)
 
 // CREATE Game
-router.post("/", verifyToken, gameController.create_game);
+router.post("/", verifyToken, screenDemoUser, gameController.create_game);
 
 // READ All Games
 router.get("/", gameController.read_game_many);
@@ -20,9 +22,9 @@ router.get("/circ", gameController.read_game_circ);
 router.get("/:id", gameController.read_game);
 
 // UPDATE Game
-router.put("/:id", verifyToken, gameController.update_game);
+router.put("/:id", verifyToken, screenDemoUser, gameController.update_game);
 
 // DELETE Game
-router.delete("/:id", verifyToken, gameController.delete_game);
+router.delete("/:id", verifyToken, screenDemoUser, gameController.delete_game);
 
 module.exports = router;
